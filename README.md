@@ -8,6 +8,12 @@ An AI-powered platform for medicinal plant recognition, AYUSH therapy recommenda
 • AYUSH-based healthcare systems
 • Geographical, soil, and climate-based recommendation systems
 
+Area of Work
+   Include relevant areas such as:
+   Artificial Intelligence, Machine Learning, Deep Learning, Computer Vision, YOLOv8, Full-Stack Development, AYUSH, Healthcare Technology, NLP/Voice AI, Geospatial/Environmental Data, etc.
+   Keep this concise and professional.
+
+
 ## Project Structure
 
 ```
