@@ -1,6 +1,12 @@
 # ECHO VedaAI - AI-Powered AYUSH Plant Recognition & Herbal Therapy
 
 An AI-powered platform for medicinal plant recognition, AYUSH therapy recommendations, and herbal wellness.
+• Artificial Intelligence
+• Machine Learning / Deep Learning
+• Computer Vision
+• Full-Stack Development
+• AYUSH-based healthcare systems
+• Geographical, soil, and climate-based recommendation systems
 
 ## Project Structure
 
