@@ -1,4 +1,4 @@
-# ECHO VedaAI - AI-Powered AYUSH Plant Recognition & Herbal Therapy
+# ECHO VedaAI - Agentic Multimodal Cognitive Intelligence
 
 An AI-powered platform for medicinal plant recognition, AYUSH therapy recommendations, and herbal wellness.
 • Artificial Intelligence
