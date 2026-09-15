@@ -8,7 +8,7 @@ An AI-powered platform for medicinal plant recognition, AYUSH therapy recommenda
 • AYUSH-based healthcare systems
 • Geographical, soil, and climate-based recommendation systems
 
- **Problem Statement
+ **Problem Statement**
 
 
  
