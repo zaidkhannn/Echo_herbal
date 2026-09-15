@@ -24,7 +24,7 @@ of AI in the plant domain but the lack of an integrated framework combining all 
 capabilities within the specific AYUSH context
 
 
-**  Project Objectives**
+**Project Objectives**
 
 1. YOLOv8-Based Plant Recognition: Fine-tune YOLOv8 on AYUSH-relevant
 medicinal plant images for accurate real-time identification.
