@@ -1,16 +1,17 @@
 import { useState, useMemo } from 'react';
-import { Search, X, ChevronDown, Leaf } from 'lucide-react';
+import { Search, X, ChevronDown } from 'lucide-react';
 import { plants, categories } from '../data/plants';
 import PlantCard from './PlantCard';
+import PageHeader from './PageHeader';
 
 function PlantModal({ plant, onClose }) {
   if (!plant) return null;
 
   const categoryColors = {
-    'Ayurveda': 'hsl(150, 45%, 35%)',
-    'Unani': 'hsl(210, 60%, 55%)',
-    'Siddha': 'hsl(15, 85%, 55%)',
-    'Homeopathy': 'hsl(270, 50%, 50%)',
+    'Ayurveda': '#1B7556',
+    'Unani': '#2A7A8C',
+    'Siddha': '#C06C3E',
+    'Homeopathy': '#6B5B95',
   };
 
   return (
@@ -20,7 +21,7 @@ function PlantModal({ plant, onClose }) {
         position: 'fixed',
         inset: 0,
         zIndex: 200,
-        background: 'rgba(0,0,0,0.6)',
+        background: 'rgba(22, 51, 40, 0.45)',
         backdropFilter: 'blur(8px)',
         display: 'flex',
         alignItems: 'center',
@@ -32,37 +33,47 @@ function PlantModal({ plant, onClose }) {
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: 'hsl(var(--card))',
+          background: 'var(--card-bg)',
           borderRadius: 'var(--radius-lg)',
           maxWidth: '680px',
           width: '100%',
           maxHeight: '90vh',
           overflow: 'auto',
           boxShadow: 'var(--shadow-deep)',
+          border: '1px solid var(--border)',
           animation: 'dropIn 0.4s ease-out',
         }}
       >
         {/* Header */}
         <div style={{
-          height: '200px',
+          height: '220px',
           background: `linear-gradient(135deg, ${plant.color}20, ${plant.color}40)`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
+          overflow: 'hidden',
         }}>
-          <span style={{ fontSize: '5rem' }}>{plant.emoji}</span>
+          {plant.image ? (
+            <img 
+              src={plant.image} 
+              alt={plant.name}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          ) : (
+            <span style={{ fontSize: '5.5rem' }}>{plant.emoji}</span>
+          )}
           <button
             onClick={onClose}
             style={{
               position: 'absolute',
               top: '1rem',
               right: '1rem',
-              width: '2.25rem',
-              height: '2.25rem',
+              width: '2.5rem',
+              height: '2.5rem',
               borderRadius: '50%',
-              background: 'rgba(0,0,0,0.3)',
-              color: 'white',
+              background: 'rgba(22, 51, 40, 0.6)',
+              color: '#FFFFFF',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -71,48 +82,49 @@ function PlantModal({ plant, onClose }) {
               backdropFilter: 'blur(4px)',
             }}
           >
-            <X size={16} />
+            <X size={18} />
           </button>
           <div style={{
             position: 'absolute',
             bottom: '1rem',
             left: '1.5rem',
-            padding: '0.3rem 0.8rem',
+            padding: '0.4rem 0.9rem',
             borderRadius: '9999px',
-            background: categoryColors[plant.category] || 'hsl(var(--primary))',
-            color: 'white',
-            fontSize: '0.7rem',
-            fontWeight: 600,
+            background: categoryColors[plant.category] || 'var(--primary)',
+            color: '#FFFFFF',
+            fontSize: '0.75rem',
+            fontWeight: 700,
             textTransform: 'uppercase',
-            letterSpacing: '0.05em',
+            letterSpacing: '0.06em',
           }}>
             {plant.category}
           </div>
         </div>
 
         {/* Content */}
-        <div style={{ padding: '2rem' }}>
+        <div style={{ padding: '2.25rem' }}>
           <h2 style={{
-            fontFamily: "'Playfair Display', serif",
             fontSize: '2rem',
-            fontWeight: 700,
-            color: 'hsl(var(--foreground))',
-            marginBottom: '0.25rem',
+            fontWeight: 800,
+            color: 'var(--heading-color)',
+            marginBottom: '0.35rem',
+            letterSpacing: '-0.02em',
           }}>
             {plant.name}
           </h2>
           <p style={{
             fontStyle: 'italic',
-            color: 'hsl(var(--muted-foreground))',
-            fontSize: '1rem',
-            marginBottom: '1.25rem',
+            color: 'var(--muted-text)',
+            fontSize: '1.05rem',
+            fontWeight: 500,
+            marginBottom: '1.35rem',
           }}>
             {plant.scientificName}
           </p>
 
           <p style={{
-            fontSize: '0.95rem',
-            color: 'hsl(var(--foreground) / 0.85)',
+            fontSize: '1rem',
+            color: 'var(--body-text)',
             lineHeight: 1.7,
             marginBottom: '1.5rem',
           }}>
@@ -122,22 +134,22 @@ function PlantModal({ plant, onClose }) {
           {/* Medicinal Uses */}
           <div style={{ marginBottom: '1.5rem' }}>
             <h3 style={{
-              fontSize: '0.8rem',
-              fontWeight: 600,
+              fontSize: '0.82rem',
+              fontWeight: 700,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              color: 'hsl(var(--muted-foreground))',
-              marginBottom: '0.6rem',
+              letterSpacing: '0.06em',
+              color: 'var(--muted-text)',
+              marginBottom: '0.65rem',
             }}>Medicinal Uses</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
               {plant.medicinalUses.map((use, i) => (
                 <span key={i} style={{
-                  padding: '0.3rem 0.7rem',
+                  padding: '0.4rem 0.85rem',
                   borderRadius: '9999px',
-                  background: 'hsl(var(--primary) / 0.08)',
-                  color: 'hsl(var(--primary))',
-                  fontSize: '0.8rem',
-                  fontWeight: 500,
+                  background: 'var(--primary-light)',
+                  color: 'var(--primary)',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
                 }}>
                   {use}
                 </span>
@@ -148,36 +160,36 @@ function PlantModal({ plant, onClose }) {
           {/* Dosha Effect */}
           <div style={{ marginBottom: '1.5rem' }}>
             <h3 style={{
-              fontSize: '0.8rem',
-              fontWeight: 600,
+              fontSize: '0.82rem',
+              fontWeight: 700,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              color: 'hsl(var(--muted-foreground))',
-              marginBottom: '0.6rem',
+              letterSpacing: '0.06em',
+              color: 'var(--muted-text)',
+              marginBottom: '0.65rem',
             }}>Dosha Balance</h3>
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
               {Object.entries(plant.doshaEffect).map(([dosha, effect]) => {
                 const colors = {
-                  vata: { bg: 'hsl(210, 60%, 65%, 0.1)', color: 'hsl(210, 60%, 55%)', label: 'Vata' },
-                  pitta: { bg: 'hsl(15, 85%, 65%, 0.1)', color: 'hsl(15, 85%, 55%)', label: 'Pitta' },
-                  kapha: { bg: 'hsl(150, 45%, 40%, 0.1)', color: 'hsl(150, 45%, 35%)', label: 'Kapha' },
+                  vata: { bg: '#EBF4FA', color: '#2C6E91', label: 'Vata' },
+                  pitta: { bg: '#FDF0E9', color: '#C05C2B', label: 'Pitta' },
+                  kapha: { bg: '#EAF4EE', color: '#1B7556', label: 'Kapha' },
                 };
                 const c = colors[dosha];
                 return (
                   <div key={dosha} style={{
-                    padding: '0.5rem 1rem',
+                    padding: '0.6rem 1.1rem',
                     borderRadius: 'var(--radius-sm)',
                     background: c.bg,
-                    border: `1px solid ${c.color}30`,
+                    border: `1px solid ${c.color}25`,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    minWidth: '100px',
+                    minWidth: '105px',
                   }}>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 600, color: c.color, textTransform: 'uppercase' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: c.color, textTransform: 'uppercase' }}>
                       {c.label}
                     </span>
-                    <span style={{ fontSize: '0.82rem', color: 'hsl(var(--foreground))', marginTop: '0.2rem', textTransform: 'capitalize' }}>
+                    <span style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--heading-color)', marginTop: '0.2rem', textTransform: 'capitalize' }}>
                       {effect}
                     </span>
                   </div>
@@ -188,62 +200,63 @@ function PlantModal({ plant, onClose }) {
 
           {/* Preparation */}
           <div style={{
-            padding: '1rem',
-            borderRadius: 'var(--radius-sm)',
-            background: 'hsl(var(--muted) / 0.5)',
+            padding: '1.15rem',
+            borderRadius: 'var(--radius)',
+            background: 'var(--secondary)',
+            border: '1px solid var(--border)',
             marginBottom: '1.25rem',
           }}>
             <h3 style={{
-              fontSize: '0.8rem',
-              fontWeight: 600,
+              fontSize: '0.82rem',
+              fontWeight: 700,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              color: 'hsl(var(--muted-foreground))',
-              marginBottom: '0.4rem',
+              letterSpacing: '0.06em',
+              color: 'var(--heading-color)',
+              marginBottom: '0.45rem',
             }}>Preparation</h3>
-            <p style={{ fontSize: '0.9rem', color: 'hsl(var(--foreground) / 0.85)', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.92rem', color: 'var(--body-text)', lineHeight: 1.6 }}>
               {plant.preparation}
             </p>
           </div>
 
           {/* Dosage */}
           <div style={{
-            padding: '1rem',
-            borderRadius: 'var(--radius-sm)',
-            background: 'hsl(var(--primary) / 0.05)',
-            border: '1px solid hsl(var(--primary) / 0.1)',
+            padding: '1.15rem',
+            borderRadius: 'var(--radius)',
+            background: 'var(--primary-light)',
+            border: '1px solid rgba(27, 117, 86, 0.2)',
             marginBottom: '1.25rem',
           }}>
             <h3 style={{
-              fontSize: '0.8rem',
-              fontWeight: 600,
+              fontSize: '0.82rem',
+              fontWeight: 700,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              color: 'hsl(var(--primary))',
-              marginBottom: '0.4rem',
-            }}>💊 Dosage</h3>
-            <p style={{ fontSize: '0.9rem', color: 'hsl(var(--foreground) / 0.85)' }}>
+              letterSpacing: '0.06em',
+              color: 'var(--primary)',
+              marginBottom: '0.45rem',
+            }}>💊 Recommended Dosage</h3>
+            <p style={{ fontSize: '0.92rem', color: 'var(--heading-color)', fontWeight: 500 }}>
               {plant.dosage}
             </p>
           </div>
 
           {/* Precautions */}
           <div style={{
-            padding: '1rem',
-            borderRadius: 'var(--radius-sm)',
-            background: 'hsl(var(--accent) / 0.08)',
-            border: '1px solid hsl(var(--accent) / 0.2)',
+            padding: '1.15rem',
+            borderRadius: 'var(--radius)',
+            background: '#FFF9EB',
+            border: '1px solid #FDE68A',
             marginBottom: '1.25rem',
           }}>
             <h3 style={{
-              fontSize: '0.8rem',
-              fontWeight: 600,
+              fontSize: '0.82rem',
+              fontWeight: 700,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              color: 'hsl(var(--accent))',
-              marginBottom: '0.4rem',
+              letterSpacing: '0.06em',
+              color: '#92400E',
+              marginBottom: '0.45rem',
             }}>⚠️ Precautions</h3>
-            <p style={{ fontSize: '0.9rem', color: 'hsl(var(--foreground) / 0.85)' }}>
+            <p style={{ fontSize: '0.92rem', color: '#78350F' }}>
               {plant.precautions}
             </p>
           </div>
@@ -251,21 +264,23 @@ function PlantModal({ plant, onClose }) {
           {/* Regions */}
           <div>
             <h3 style={{
-              fontSize: '0.8rem',
-              fontWeight: 600,
+              fontSize: '0.82rem',
+              fontWeight: 700,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              color: 'hsl(var(--muted-foreground))',
-              marginBottom: '0.4rem',
-            }}>🌍 Found In</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+              letterSpacing: '0.06em',
+              color: 'var(--muted-text)',
+              marginBottom: '0.45rem',
+            }}>🌍 Native Regions</h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
               {plant.regions.map((region, i) => (
                 <span key={i} style={{
-                  padding: '0.2rem 0.6rem',
+                  padding: '0.3rem 0.75rem',
                   borderRadius: '9999px',
-                  background: 'hsl(var(--secondary))',
-                  color: 'hsl(var(--secondary-foreground))',
-                  fontSize: '0.75rem',
+                  background: 'var(--secondary)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--body-text)',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
                 }}>
                   {region}
                 </span>
@@ -295,18 +310,16 @@ export default function PlantEncyclopedia() {
   }, [search, category]);
 
   return (
-    <section style={{ paddingTop: '6rem', minHeight: '100vh', background: 'var(--gradient-garden)' }}>
-      <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
-        {/* Header */}
-        <div className="section-header">
-          <div className="badge badge-primary" style={{ marginBottom: '1rem' }}>
-            <Leaf size={12} /> 50+ Plants
-          </div>
-          <h1 className="section-title">Plant Encyclopedia</h1>
-          <p className="section-subtitle">
-            Explore our comprehensive database of medicinal plants from all five AYUSH systems.
-          </p>
-        </div>
+    <section className="page-tool page-tool--soft">
+      <div className="container page-inner">
+        <PageHeader
+          eyebrow="500+ medicinal plants"
+          subtitle="Explore our comprehensive database of medicinal plants from all five AYUSH systems."
+        >
+          <h1 className="page-header__title font-display">
+            Plant <span className="text-gradient">Encyclopedia</span>
+          </h1>
+        </PageHeader>
 
         {/* Search & Filters */}
         <div style={{
@@ -318,12 +331,12 @@ export default function PlantEncyclopedia() {
         }}>
           {/* Search Bar */}
           <div style={{ position: 'relative' }}>
-            <Search size={18} style={{
+            <Search size={20} style={{
               position: 'absolute',
-              left: '1rem',
+              left: '1.15rem',
               top: '50%',
               transform: 'translateY(-50%)',
-              color: 'hsl(var(--muted-foreground))',
+              color: 'var(--muted-text)',
             }} />
             <input
               type="text"
@@ -332,13 +345,15 @@ export default function PlantEncyclopedia() {
               placeholder="Search plants by name, scientific name, or medicinal use..."
               className="input"
               style={{
-                paddingLeft: '2.75rem',
-                paddingRight: search ? '2.5rem' : '1rem',
-                height: '3rem',
+                paddingLeft: '3rem',
+                paddingRight: search ? '2.75rem' : '1.25rem',
+                height: '3.25rem',
                 borderRadius: 'var(--radius)',
-                background: 'hsl(var(--card))',
-                border: '1px solid hsl(var(--border))',
-                fontSize: '0.95rem',
+                background: 'var(--card-bg)',
+                border: '1px solid var(--border)',
+                fontSize: '1.02rem',
+                color: 'var(--body-text)',
+                boxShadow: 'var(--shadow-card)',
               }}
             />
             {search && (
@@ -346,14 +361,14 @@ export default function PlantEncyclopedia() {
                 onClick={() => setSearch('')}
                 style={{
                   position: 'absolute',
-                  right: '0.75rem',
+                  right: '0.85rem',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '1.5rem',
-                  height: '1.5rem',
+                  width: '1.75rem',
+                  height: '1.75rem',
                   borderRadius: '50%',
-                  background: 'hsl(var(--muted))',
-                  color: 'hsl(var(--muted-foreground))',
+                  background: 'var(--secondary)',
+                  color: 'var(--muted-text)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -361,7 +376,7 @@ export default function PlantEncyclopedia() {
                   cursor: 'pointer',
                 }}
               >
-                <X size={12} />
+                <X size={14} />
               </button>
             )}
           </div>
@@ -374,7 +389,7 @@ export default function PlantEncyclopedia() {
                 onClick={() => setCategory(cat.id)}
                 className={`tab ${category === cat.id ? 'active' : ''}`}
               >
-                {cat.emoji && <span style={{ marginRight: '0.3rem' }}>{cat.emoji}</span>}
+                {cat.emoji && <span style={{ marginRight: '0.35rem' }}>{cat.emoji}</span>}
                 {cat.name}
               </button>
             ))}
@@ -384,11 +399,12 @@ export default function PlantEncyclopedia() {
         {/* Results Count */}
         <p style={{
           textAlign: 'center',
-          color: 'hsl(var(--muted-foreground))',
-          fontSize: '0.85rem',
-          marginBottom: '1.5rem',
+          color: 'var(--muted-text)',
+          fontSize: '0.92rem',
+          fontWeight: 500,
+          marginBottom: '1.75rem',
         }}>
-          Showing {filtered.length} of {plants.length} plants
+          Showing <strong style={{ color: 'var(--heading-color)' }}>{filtered.length}</strong> of {plants.length} plants
         </p>
 
         {/* Plant Grid */}
@@ -410,13 +426,18 @@ export default function PlantEncyclopedia() {
           <div style={{
             textAlign: 'center',
             padding: '4rem 2rem',
+            background: 'var(--card-bg)',
+            borderRadius: 'var(--radius-lg)',
+            border: '1px solid var(--border)',
+            maxWidth: '500px',
+            margin: '0 auto',
           }}>
             <span style={{ fontSize: '3rem', display: 'block', marginBottom: '1rem' }}>🔍</span>
-            <p style={{ fontSize: '1.1rem', color: 'hsl(var(--foreground))', fontWeight: 500 }}>
+            <p style={{ fontSize: '1.2rem', color: 'var(--heading-color)', fontWeight: 700 }}>
               No plants found
             </p>
-            <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.9rem', marginTop: '0.5rem' }}>
-              Try a different search term or category filter
+            <p style={{ color: 'var(--muted-text)', fontSize: '0.95rem', marginTop: '0.5rem' }}>
+              Try a different search term or select another category filter
             </p>
           </div>
         )}

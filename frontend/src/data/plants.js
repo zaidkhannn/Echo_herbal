@@ -12,7 +12,8 @@ export const plants = [
     regions: ["India", "Southeast Asia", "Australia"],
     precautions: "May lower blood sugar. Avoid during pregnancy in large amounts.",
     emoji: "🌿",
-    color: "#2d8a5e"
+    color: "#2d8a5e",
+    image: "/images/tulsi.jpg"
   },
   {
     id: 2,
@@ -27,7 +28,8 @@ export const plants = [
     regions: ["India", "Middle East", "Africa"],
     precautions: "Not recommended during pregnancy. May interact with thyroid medications.",
     emoji: "🌱",
-    color: "#8B6914"
+    color: "#8B6914",
+    image: "/images/ashwagandha.jpg"
   },
   {
     id: 3,
@@ -42,7 +44,8 @@ export const plants = [
     regions: ["India", "Southeast Asia", "China"],
     precautions: "High doses may cause digestive issues. May interact with blood thinners.",
     emoji: "✨",
-    color: "#D4A017"
+    color: "#D4A017",
+    image: "/images/turmeric.jpg"
   },
   {
     id: 4,
@@ -57,7 +60,8 @@ export const plants = [
     regions: ["India", "Myanmar", "Pakistan", "Bangladesh"],
     precautions: "Not recommended during pregnancy. May lower blood sugar significantly.",
     emoji: "🌳",
-    color: "#1a7a3a"
+    color: "#1a7a3a",
+    image: "/images/neem.jpg"
   },
   {
     id: 5,
@@ -72,7 +76,8 @@ export const plants = [
     regions: ["India", "Australia", "Europe", "Africa"],
     precautions: "May cause nausea in some. Start with lower doses.",
     emoji: "🧠",
-    color: "#4a9e6e"
+    color: "#4a9e6e",
+    image: "/images/brahmi.jpg"
   },
   {
     id: 6,
@@ -87,7 +92,8 @@ export const plants = [
     regions: ["India", "Southeast Asia", "China"],
     precautions: "May increase cold sensitivity. Moderate intake advised in winter.",
     emoji: "🫒",
-    color: "#6B8E23"
+    color: "#6B8E23",
+    image: "/images/amla.jpg"
   },
   {
     id: 7,
@@ -102,7 +108,8 @@ export const plants = [
     regions: ["India", "Myanmar", "Sri Lanka"],
     precautions: "May lower blood sugar. Consult doctor if on diabetes medication.",
     emoji: "🍃",
-    color: "#2E8B57"
+    color: "#2E8B57",
+    image: "/images/giloy.jpg"
   },
   {
     id: 8,
@@ -117,7 +124,8 @@ export const plants = [
     regions: ["India", "Nepal", "Sri Lanka", "Africa"],
     precautions: "Avoid in hormone-sensitive conditions without medical advice.",
     emoji: "🌸",
-    color: "#DA70D6"
+    color: "#DA70D6",
+    image: "/images/shatavari.jpg"
   },
   {
     id: 9,
@@ -132,7 +140,8 @@ export const plants = [
     regions: ["India", "Nepal"],
     precautions: "May cause loose stools initially. Reduce dosage if this occurs.",
     emoji: "🍎",
-    color: "#CD853F"
+    color: "#CD853F",
+    image: "/images/triphala.jpg",
   },
   {
     id: 10,
@@ -147,7 +156,8 @@ export const plants = [
     regions: ["Mediterranean", "Central Asia", "India"],
     precautions: "May raise blood pressure. Avoid in hypertension. Not for prolonged use.",
     emoji: "🪵",
-    color: "#A0522D"
+    color: "#A0522D",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&auto=format&fit=crop",
   },
   {
     id: 11,
@@ -162,7 +172,8 @@ export const plants = [
     regions: ["Worldwide", "Africa", "India", "Caribbean"],
     precautions: "Latex portion is a strong laxative. Use only gel for internal consumption.",
     emoji: "🪴",
-    color: "#90EE90"
+    color: "#90EE90",
+    image: "https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=600&auto=format&fit=crop",
   },
   {
     id: 12,
@@ -177,7 +188,8 @@ export const plants = [
     regions: ["India", "Myanmar", "Sri Lanka"],
     precautions: "Consult doctor if on heart medications. May enhance effects of cardiac drugs.",
     emoji: "❤️",
-    color: "#8B0000"
+    color: "#8B0000",
+    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&auto=format&fit=crop",
   },
   {
     id: 13,
@@ -192,7 +204,8 @@ export const plants = [
     regions: ["India", "Sri Lanka", "Myanmar"],
     precautions: "May lower blood sugar. Monitor if diabetic.",
     emoji: "🛡️",
-    color: "#3CB371"
+    color: "#3CB371",
+    image: "/images/giloy.jpg",
   },
   {
     id: 14,
@@ -207,7 +220,8 @@ export const plants = [
     regions: ["Europe", "Mediterranean", "India"],
     precautions: "Rare allergic reactions in those sensitive to Asteraceae family plants.",
     emoji: "🌼",
-    color: "#FFD700"
+    color: "#FFD700",
+    image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&auto=format&fit=crop",
   },
   {
     id: 15,
@@ -222,7 +236,8 @@ export const plants = [
     regions: ["Europe", "North America", "Siberia"],
     precautions: "Never apply to broken skin. Internal use only in homeopathic potencies.",
     emoji: "💜",
-    color: "#9370DB"
+    color: "#9370DB",
+    image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=600&auto=format&fit=crop",
   },
   {
     id: 16,
@@ -237,7 +252,8 @@ export const plants = [
     regions: ["India", "Egypt", "Arabia", "Africa"],
     precautions: "Not for prolonged use. Avoid in pregnancy, inflammatory bowel disease.",
     emoji: "🍂",
-    color: "#DAA520"
+    color: "#DAA520",
+    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&auto=format&fit=crop",
   },
   {
     id: 17,
@@ -252,7 +268,8 @@ export const plants = [
     regions: ["India"],
     precautions: "Generally safe. Consult doctor during pregnancy.",
     emoji: "🌺",
-    color: "#4169E1"
+    color: "#4169E1",
+    image: "https://images.unsplash.com/photo-1533038590840-1cde6e668a91?w=600&auto=format&fit=crop",
   },
   {
     id: 18,
@@ -267,7 +284,8 @@ export const plants = [
     regions: ["India", "Nepal", "China", "Japan"],
     precautions: "May cause red-colored urine (harmless). Avoid in pregnancy.",
     emoji: "🔴",
-    color: "#DC143C"
+    color: "#DC143C",
+    image: "https://images.unsplash.com/photo-1508747703725-719777637510?w=600&auto=format&fit=crop",
   },
   {
     id: 19,
@@ -282,7 +300,8 @@ export const plants = [
     regions: ["India", "Nepal", "China", "Southeast Asia"],
     precautions: "Avoid during pregnancy and severe dehydration.",
     emoji: "👑",
-    color: "#B8860B"
+    color: "#B8860B",
+    image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&auto=format&fit=crop",
   },
   {
     id: 20,
@@ -297,7 +316,8 @@ export const plants = [
     regions: ["Worldwide", "Europe", "Middle East"],
     precautions: "May worsen GERD. Essential oil not for children under 8.",
     emoji: "🌱",
-    color: "#00CED1"
+    color: "#00CED1",
+    image: "https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?w=600&auto=format&fit=crop",
   },
   {
     id: 21,
@@ -312,7 +332,8 @@ export const plants = [
     regions: ["India", "Pakistan", "Bangladesh"],
     precautions: "May interact with thyroid medications and blood thinners.",
     emoji: "💎",
-    color: "#8B4513"
+    color: "#8B4513",
+    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=600&auto=format&fit=crop",
   },
   {
     id: 22,
@@ -327,7 +348,8 @@ export const plants = [
     regions: ["Europe", "Western Asia", "India"],
     precautions: "Allergy possible if sensitive to ragweed family.",
     emoji: "🌼",
-    color: "#F0E68C"
+    color: "#F0E68C",
+    image: "https://images.unsplash.com/photo-1589123053646-4e8b39414e5b?w=600&auto=format&fit=crop",
   },
   {
     id: 23,
@@ -342,7 +364,8 @@ export const plants = [
     regions: ["India", "China", "Thailand", "Brazil"],
     precautions: "Generally safe. Excess internal use may cause chills in some.",
     emoji: "💇",
-    color: "#228B22"
+    color: "#228B22",
+    image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop",
   },
   {
     id: 24,
@@ -357,7 +380,8 @@ export const plants = [
     regions: ["Middle East", "India", "Egypt", "Mediterranean"],
     precautions: "May lower blood pressure. Use cautiously with blood thinners.",
     emoji: "⚫",
-    color: "#2F4F4F"
+    color: "#2F4F4F",
+    image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=600&auto=format&fit=crop",
   },
   {
     id: 25,
@@ -372,7 +396,8 @@ export const plants = [
     regions: ["India", "Iran", "Pakistan"],
     precautions: "Always take with plenty of water. May block nutrient absorption if taken with meals.",
     emoji: "🌾",
-    color: "#DEB887"
+    color: "#DEB887",
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop",
   },
   {
     id: 26,
@@ -387,7 +412,8 @@ export const plants = [
     regions: ["India", "China", "Europe", "North America"],
     precautions: "Use only Acorus calamus var. americanus. Some varieties contain beta-asarone. Use in small doses.",
     emoji: "🎋",
-    color: "#556B2F"
+    color: "#556B2F",
+    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&auto=format&fit=crop",
   },
   {
     id: 27,
@@ -402,7 +428,8 @@ export const plants = [
     regions: ["India", "Sri Lanka", "Indonesia", "Haiti"],
     precautions: "Generally very safe. Essential oil for external use only.",
     emoji: "🧊",
-    color: "#708090"
+    color: "#708090",
+    image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop",
   },
   {
     id: 28,
@@ -417,7 +444,8 @@ export const plants = [
     regions: ["Europe", "Asia", "North America"],
     precautions: "ONLY use in homeopathic potencies. Raw plant is extremely poisonous.",
     emoji: "⚡",
-    color: "#4B0082"
+    color: "#4B0082",
+    image: "https://images.unsplash.com/photo-1508747703725-719777637510?w=600&auto=format&fit=crop",
   },
   {
     id: 29,
@@ -432,7 +460,8 @@ export const plants = [
     regions: ["India", "Africa", "Philippines", "Central America"],
     precautions: "Root and bark extracts should be avoided in pregnancy.",
     emoji: "🥬",
-    color: "#32CD32"
+    color: "#32CD32",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop",
   },
   {
     id: 30,
@@ -447,7 +476,8 @@ export const plants = [
     regions: ["India", "China", "Indonesia", "South Africa"],
     precautions: "May cause headaches in some. Avoid with hepatotoxic drugs.",
     emoji: "🧬",
-    color: "#3CB371"
+    color: "#3CB371",
+    image: "https://images.unsplash.com/photo-1515586000433-45406d8e6662?w=600&auto=format&fit=crop",
   },
   {
     id: 31,
@@ -462,7 +492,8 @@ export const plants = [
     regions: ["Mediterranean", "India", "Egypt"],
     precautions: "Large amounts may have estrogenic effects. Use moderately.",
     emoji: "🌿",
-    color: "#9ACD32"
+    color: "#9ACD32",
+    image: "https://images.unsplash.com/photo-1592394533824-9440e5d68530?w=600&auto=format&fit=crop",
   },
   {
     id: 32,
@@ -477,7 +508,8 @@ export const plants = [
     regions: ["India"],
     precautions: "Generally safe. Avoid excess in kapha conditions.",
     emoji: "⚪",
-    color: "#F5F5DC"
+    color: "#F5F5DC",
+    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&auto=format&fit=crop",
   },
   {
     id: 33,
@@ -492,7 +524,8 @@ export const plants = [
     regions: ["India", "Brazil", "Africa"],
     precautions: "May lower blood pressure. Monitor if on BP medication.",
     emoji: "💧",
-    color: "#4682B4"
+    color: "#4682B4",
+    image: "https://images.unsplash.com/photo-1508747703725-719777637510?w=600&auto=format&fit=crop",
   },
   {
     id: 34,
@@ -507,7 +540,8 @@ export const plants = [
     regions: ["Mediterranean", "Europe", "India"],
     precautions: "Essential oil may cause skin irritation if undiluted. Avoid oral intake of essential oil.",
     emoji: "💐",
-    color: "#9370DB"
+    color: "#9370DB",
+    image: "https://images.unsplash.com/photo-1528183429752-a97d0bf99b5a?w=600&auto=format&fit=crop",
   },
   {
     id: 35,
@@ -522,7 +556,8 @@ export const plants = [
     regions: ["Himalayas", "India", "Nepal"],
     precautions: "May cause mild diarrhea initially. Endangered species — use sustainably sourced.",
     emoji: "🏔️",
-    color: "#5F9EA0"
+    color: "#5F9EA0",
+    image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop",
   },
   {
     id: 36,
@@ -537,7 +572,8 @@ export const plants = [
     regions: ["Sri Lanka", "India", "Myanmar", "Indonesia"],
     precautions: "Cassia variety high in coumarin — prefer Ceylon cinnamon. Avoid large doses in pregnancy.",
     emoji: "🫚",
-    color: "#D2691E"
+    color: "#D2691E",
+    image: "https://images.unsplash.com/photo-1509358271058-acd01cc9386a?w=600&auto=format&fit=crop",
   },
   {
     id: 37,
@@ -552,7 +588,8 @@ export const plants = [
     regions: ["India", "Southeast Asia", "Australia"],
     precautions: "Extremely toxic in crude form. ONLY use homeopathic potencies.",
     emoji: "💊",
-    color: "#696969"
+    color: "#696969",
+    image: "https://images.unsplash.com/photo-1508747703725-719777637510?w=600&auto=format&fit=crop",
   },
   {
     id: 38,
@@ -567,7 +604,8 @@ export const plants = [
     regions: ["India", "Sri Lanka", "Southeast Asia"],
     precautions: "Use fruit pulp only, not seeds. Avoid in pregnancy.",
     emoji: "🌕",
-    color: "#FFD700"
+    color: "#FFD700",
+    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&auto=format&fit=crop",
   },
   {
     id: 39,
@@ -582,7 +620,8 @@ export const plants = [
     regions: ["Himalayas", "India", "Nepal", "China"],
     precautions: "Endangered species — source responsibly. Avoid in pregnancy.",
     emoji: "🌙",
-    color: "#483D8B"
+    color: "#483D8B",
+    image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop",
   },
   {
     id: 40,
@@ -597,7 +636,8 @@ export const plants = [
     regions: ["Worldwide", "India", "China", "Jamaica"],
     precautions: "May increase pitta. Avoid large doses before surgery (blood-thinning effect).",
     emoji: "🫚",
-    color: "#DAA520"
+    color: "#DAA520",
+    image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&auto=format&fit=crop",
   },
   {
     id: 41,
@@ -612,7 +652,8 @@ export const plants = [
     regions: ["Himalayas", "India", "Nepal", "Bhutan"],
     precautions: "Very bitter taste. May worsen ulcers. Avoid in pregnancy.",
     emoji: "🌿",
-    color: "#6B8E23"
+    color: "#6B8E23",
+    image: "https://images.unsplash.com/photo-1508747703725-719777637510?w=600&auto=format&fit=crop",
   },
   {
     id: 42,
@@ -627,7 +668,8 @@ export const plants = [
     regions: ["India", "Guatemala", "Sri Lanka"],
     precautions: "Generally very safe. Avoid concentrated oil internally in pregnancy.",
     emoji: "💚",
-    color: "#008B45"
+    color: "#008B45",
+    image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=600&auto=format&fit=crop",
   },
   {
     id: 43,
@@ -642,7 +684,8 @@ export const plants = [
     regions: ["India", "Sri Lanka", "Thailand", "Myanmar"],
     precautions: "Unripe fruit is very astringent — use cautiously in constipation.",
     emoji: "🍈",
-    color: "#BDB76B"
+    color: "#BDB76B",
+    image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&auto=format&fit=crop",
   },
   {
     id: 44,
@@ -657,7 +700,8 @@ export const plants = [
     regions: ["India", "Vietnam", "Indonesia", "Brazil"],
     precautions: "May aggravate pitta. Avoid in gastritis and ulcers.",
     emoji: "⚫",
-    color: "#2F2F2F"
+    color: "#2F2F2F",
+    image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=600&auto=format&fit=crop",
   },
   {
     id: 45,
@@ -672,7 +716,8 @@ export const plants = [
     regions: ["India", "Iran", "Egypt", "Afghanistan"],
     precautions: "May increase acidity in some. Use moderately.",
     emoji: "🌿",
-    color: "#808000"
+    color: "#808000",
+    image: "https://images.unsplash.com/photo-1592394533824-9440e5d68530?w=600&auto=format&fit=crop",
   },
   {
     id: 46,
@@ -687,7 +732,8 @@ export const plants = [
     regions: ["India", "Nepal"],
     precautions: "May increase kapha. Not ideal for those with congestion.",
     emoji: "🥔",
-    color: "#C4A484"
+    color: "#C4A484",
+    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&auto=format&fit=crop",
   },
   {
     id: 47,
@@ -702,7 +748,8 @@ export const plants = [
     regions: ["Mediterranean", "Europe", "Asia Minor"],
     precautions: "Essential oil very potent — dilute well. Avoid large medicinal doses in pregnancy.",
     emoji: "🌿",
-    color: "#698B22"
+    color: "#698B22",
+    image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&auto=format&fit=crop",
   },
   {
     id: 48,
@@ -717,7 +764,8 @@ export const plants = [
     regions: ["Europe", "North Africa", "Western Asia"],
     precautions: "Extremely toxic in crude form. ONLY use homeopathic potencies.",
     emoji: "🔴",
-    color: "#8B0000"
+    color: "#8B0000",
+    image: "https://images.unsplash.com/photo-1508747703725-719777637510?w=600&auto=format&fit=crop",
   },
   {
     id: 49,
@@ -732,7 +780,8 @@ export const plants = [
     regions: ["India", "Tropical regions worldwide"],
     precautions: "Generally safe. Consult practitioner for menstrual use.",
     emoji: "🌾",
-    color: "#6B4226"
+    color: "#6B4226",
+    image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop",
   },
   {
     id: 50,
@@ -753,7 +802,8 @@ export const plants = [
 
 export const categories = [
   { id: "all", name: "All Systems", color: "hsl(154, 55%, 28%)" },
-  { id: "Ayurveda", name: "Ayurveda", color: "hsl(150, 45%, 40%)", emoji: "🕉️" },
+  { id: "Ayurveda", name: "Ayurveda", color: "hsl(150, 45%, 40%)",
+    image: "https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?w=600&auto=format&fit=crop", emoji: "🕉️" },
   { id: "Unani", name: "Unani", color: "hsl(210, 60%, 65%)", emoji: "☪️" },
   { id: "Siddha", name: "Siddha", color: "hsl(15, 85%, 65%)", emoji: "🔱" },
   { id: "Homeopathy", name: "Homeopathy", color: "hsl(270, 50%, 60%)", emoji: "💊" },

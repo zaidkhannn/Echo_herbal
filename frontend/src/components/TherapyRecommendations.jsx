@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Search, Leaf, Loader2, Sparkles } from 'lucide-react';
 import { plants, ailments, ailmentRemedies } from '../data/plants';
+import PageHeader from './PageHeader';
 
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
@@ -30,7 +31,7 @@ export default function TherapyRecommendations() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'llama-3.1-70b-versatile',
+          model: 'qwen/qwen3.8-27b',
           messages: [
             {
               role: 'system',
@@ -53,7 +54,10 @@ Always add a disclaimer that this is informational and not a substitute for prof
         }),
       });
 
-      if (!response.ok) throw new Error(`API error: ${response.status}`);
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `API error: ${response.status}`);
+      }
       const data = await response.json();
       setAiResponse(data.choices[0]?.message?.content);
     } catch (err) {
@@ -64,43 +68,41 @@ Always add a disclaimer that this is informational and not a substitute for prof
   };
 
   return (
-    <section style={{ paddingTop: '6rem', minHeight: '100vh', background: 'var(--gradient-garden)' }}>
-      <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
-        {/* Header */}
-        <div className="section-header">
-          <div className="badge badge-primary" style={{ marginBottom: '1rem' }}>
-            <Sparkles size={12} /> AI + Traditional Wisdom
-          </div>
-          <h1 className="section-title">Therapy Recommendations</h1>
-          <p className="section-subtitle">
-            Find personalized herbal remedies based on AYUSH therapeutic principles.
-            Select a common ailment or ask our AI for custom guidance.
-          </p>
-        </div>
+    <section className="page-tool page-tool--soft">
+      <div className="container page-inner">
+        <PageHeader
+          eyebrow="AI + traditional wisdom"
+          subtitle="Find personalized herbal remedies based on AYUSH therapeutic principles. Select a common ailment or ask our AI for custom guidance."
+        >
+          <h1 className="page-header__title font-display">
+            Therapy <span className="text-gradient">Recommendations</span>
+          </h1>
+        </PageHeader>
 
-        {/* AI Query Section */}
-        <div className="glass-card" style={{
-          padding: '2rem',
-          maxWidth: '700px',
+        <div className="glass-card content-panel--top-accent" style={{
+          padding: '2.25rem',
+          maxWidth: '740px',
           margin: '0 auto 3rem',
         }}>
           <h3 style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: '1.2rem',
-            fontWeight: 600,
+            fontSize: '1.35rem',
+            fontWeight: 800,
+            color: 'var(--heading-color)',
             marginBottom: '0.75rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
+            gap: '0.6rem',
+            letterSpacing: '-0.01em',
           }}>
             🤖 Ask AI for Custom Recommendations
           </h3>
           <p style={{
-            fontSize: '0.85rem',
-            color: 'hsl(var(--muted-foreground))',
-            marginBottom: '1rem',
+            fontSize: '0.95rem',
+            color: 'var(--muted-text)',
+            marginBottom: '1.25rem',
+            lineHeight: 1.6,
           }}>
-            Describe your health concern and get personalized AYUSH therapy recommendations powered by AI.
+            Describe your health concern and get personalized AYUSH therapy recommendations powered by clinical AI.
           </p>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
             <input
@@ -112,55 +114,53 @@ Always add a disclaimer that this is informational and not a substitute for prof
               className="input"
               style={{
                 flex: 1,
-                height: '3rem',
+                height: '3.25rem',
                 borderRadius: 'var(--radius)',
-                background: 'hsl(var(--input))',
+                background: 'var(--card-bg)',
+                border: '1px solid var(--border)',
+                fontSize: '1rem',
+                color: 'var(--body-text)',
               }}
             />
             <button
               onClick={askAI}
               disabled={loading || !customQuery.trim()}
               className="btn btn-primary"
-              style={{ opacity: loading ? 0.7 : 1 }}
+              style={{ opacity: loading ? 0.7 : 1, padding: '0 1.5rem', fontWeight: 700 }}
             >
               {loading ? (
-                <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} />
+                <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
               ) : (
-                <Sparkles size={16} />
+                <Sparkles size={18} />
               )}
-              Ask
+              Ask AI
             </button>
           </div>
 
           {/* AI Response */}
           {aiResponse && (
-            <div style={{
-              marginTop: '1.5rem',
-              padding: '1.5rem',
-              borderRadius: 'var(--radius)',
-              background: 'hsl(var(--muted) / 0.5)',
-              border: '1px solid hsl(var(--primary) / 0.1)',
-              animation: 'fadeUp 0.5s ease-out',
-            }}>
+            <div className="ai-response-panel">
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.5rem',
                 marginBottom: '1rem',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                color: 'hsl(var(--primary))',
+                fontSize: '0.88rem',
+                fontWeight: 700,
+                color: 'var(--primary)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
               }}>
-                <Sparkles size={14} /> AI Recommendation
+                <Sparkles size={16} /> Verified AYUSH Recommendation
               </div>
               <div style={{
-                fontSize: '0.9rem',
-                color: 'hsl(var(--foreground) / 0.85)',
+                fontSize: '0.98rem',
+                color: 'var(--body-text)',
                 lineHeight: 1.8,
                 whiteSpace: 'pre-wrap',
               }}>
                 {aiResponse.split('**').map((part, i) =>
-                  i % 2 === 1 ? <strong key={i}>{part}</strong> : <span key={i}>{part}</span>
+                  i % 2 === 1 ? <strong key={i} style={{ color: 'var(--heading-color)', fontWeight: 700 }}>{part}</strong> : <span key={i}>{part}</span>
                 )}
               </div>
             </div>
@@ -168,12 +168,14 @@ Always add a disclaimer that this is informational and not a substitute for prof
 
           {error && (
             <div style={{
-              marginTop: '1rem',
-              padding: '0.75rem 1rem',
+              marginTop: '1.25rem',
+              padding: '0.9rem 1.25rem',
               borderRadius: 'var(--radius-sm)',
-              background: 'hsl(var(--destructive) / 0.1)',
-              color: 'hsl(var(--destructive))',
-              fontSize: '0.85rem',
+              background: '#FDF0E9',
+              border: '1px solid #F8C8B0',
+              color: '#C05C2B',
+              fontSize: '0.92rem',
+              fontWeight: 500,
             }}>
               ⚠️ {error}
             </div>
@@ -181,45 +183,15 @@ Always add a disclaimer that this is informational and not a substitute for prof
         </div>
 
         {/* Common Ailments */}
-        <h2 style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: '1.5rem',
-          fontWeight: 600,
-          textAlign: 'center',
-          marginBottom: '1.5rem',
-        }}>
-          Or Select a Common Ailment
-        </h2>
+        <h2 className="section-heading-row">Or Select a Common Ailment</h2>
 
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.5rem',
-          justifyContent: 'center',
-          maxWidth: '800px',
-          margin: '0 auto 2.5rem',
-        }}>
+        <div className="chip-row" style={{ maxWidth: '850px', margin: '0 auto 2.5rem' }}>
           {ailments.map(ailment => (
             <button
               key={ailment}
+              type="button"
               onClick={() => setSelectedAilment(selectedAilment === ailment ? null : ailment)}
-              style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '9999px',
-                border: selectedAilment === ailment
-                  ? '2px solid hsl(var(--primary))'
-                  : '1px solid hsl(var(--border))',
-                background: selectedAilment === ailment
-                  ? 'hsl(var(--primary) / 0.1)'
-                  : 'hsl(var(--card))',
-                color: selectedAilment === ailment
-                  ? 'hsl(var(--primary))'
-                  : 'hsl(var(--foreground))',
-                fontSize: '0.85rem',
-                fontWeight: selectedAilment === ailment ? 600 : 400,
-                cursor: 'pointer',
-                transition: 'var(--transition-smooth)',
-              }}
+              className={`chip${selectedAilment === ailment ? ' chip--active' : ''}`}
             >
               {ailment}
             </button>
@@ -230,19 +202,20 @@ Always add a disclaimer that this is informational and not a substitute for prof
         {selectedAilment && (
           <div style={{ animation: 'fadeUp 0.5s ease-out' }}>
             <h3 style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '1.3rem',
-              fontWeight: 600,
+              fontSize: '1.5rem',
+              fontWeight: 800,
+              color: 'var(--heading-color)',
               textAlign: 'center',
               marginBottom: '0.5rem',
+              letterSpacing: '-0.02em',
             }}>
               Recommended Herbs for{' '}
               <span className="text-gradient">{selectedAilment}</span>
             </h3>
             <p style={{
               textAlign: 'center',
-              color: 'hsl(var(--muted-foreground))',
-              fontSize: '0.85rem',
+              color: 'var(--muted-text)',
+              fontSize: '0.95rem',
               marginBottom: '2rem',
             }}>
               These herbs are traditionally recommended in AYUSH systems for {selectedAilment.toLowerCase()}.
@@ -250,80 +223,86 @@ Always add a disclaimer that this is informational and not a substitute for prof
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: '1.25rem',
-              maxWidth: '1000px',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+              gap: '1.5rem',
+              maxWidth: '1050px',
               margin: '0 auto',
             }}>
               {getRecommendedPlants(selectedAilment).map((plant, i) => (
                 <div key={plant.id} className="glass-card" style={{
-                  padding: '1.5rem',
+                  padding: '1.75rem',
                   display: 'flex',
-                  gap: '1rem',
+                  gap: '1.25rem',
                   alignItems: 'flex-start',
                   animation: `fadeUp 0.5s ease-out ${i * 0.1}s both`,
                 }}>
                   <div style={{
-                    width: '3.5rem',
-                    height: '3.5rem',
+                    width: '4rem',
+                    height: '4rem',
                     borderRadius: 'var(--radius)',
                     background: `linear-gradient(135deg, ${plant.color}20, ${plant.color}40)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.5rem',
+                    fontSize: '1.8rem',
                     flexShrink: 0,
                   }}>
                     {plant.emoji}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
                       <div>
                         <h4 style={{
-                          fontWeight: 600,
-                          fontSize: '1rem',
-                          color: 'hsl(var(--foreground))',
+                          fontWeight: 700,
+                          fontSize: '1.1rem',
+                          color: 'var(--heading-color)',
                         }}>
                           {plant.name}
                         </h4>
                         <p style={{
                           fontStyle: 'italic',
-                          fontSize: '0.75rem',
-                          color: 'hsl(var(--muted-foreground))',
+                          fontSize: '0.82rem',
+                          color: 'var(--muted-text)',
                         }}>
                           {plant.scientificName}
                         </p>
                       </div>
-                      <span className="badge badge-primary" style={{ fontSize: '0.6rem', flexShrink: 0 }}>
+                      <span className="badge badge-primary" style={{ fontSize: '0.68rem', flexShrink: 0 }}>
                         {plant.category}
                       </span>
                     </div>
 
                     <p style={{
-                      fontSize: '0.82rem',
-                      color: 'hsl(var(--foreground) / 0.8)',
-                      lineHeight: 1.5,
-                      marginTop: '0.5rem',
-                      marginBottom: '0.5rem',
+                      fontSize: '0.88rem',
+                      color: 'var(--body-text)',
+                      lineHeight: 1.55,
+                      marginTop: '0.65rem',
+                      marginBottom: '0.65rem',
                     }}>
                       {plant.preparation}
                     </p>
 
                     <div style={{
-                      padding: '0.5rem 0.75rem',
+                      padding: '0.6rem 0.85rem',
                       borderRadius: 'var(--radius-sm)',
-                      background: 'hsl(var(--primary) / 0.05)',
-                      fontSize: '0.75rem',
-                      color: 'hsl(var(--primary))',
+                      background: 'var(--primary-light)',
+                      border: '1px solid rgba(27, 117, 86, 0.15)',
+                      fontSize: '0.82rem',
+                      color: 'var(--primary)',
+                      fontWeight: 600,
                     }}>
                       💊 <strong>Dosage:</strong> {plant.dosage}
                     </div>
 
                     {plant.precautions && (
                       <p style={{
-                        fontSize: '0.72rem',
-                        color: 'hsl(var(--accent))',
-                        marginTop: '0.5rem',
+                        fontSize: '0.78rem',
+                        color: '#92400E',
+                        marginTop: '0.6rem',
+                        background: '#FFF9EB',
+                        padding: '0.4rem 0.65rem',
+                        borderRadius: 'var(--radius-xs)',
+                        border: '1px solid #FDE68A',
                       }}>
                         ⚠️ {plant.precautions}
                       </p>
@@ -335,15 +314,15 @@ Always add a disclaimer that this is informational and not a substitute for prof
 
             {/* Disclaimer */}
             <div style={{
-              maxWidth: '700px',
-              margin: '2rem auto 0',
-              padding: '1rem',
-              borderRadius: 'var(--radius-sm)',
-              background: 'hsl(var(--accent) / 0.06)',
-              border: '1px solid hsl(var(--accent) / 0.15)',
+              maxWidth: '750px',
+              margin: '2.5rem auto 0',
+              padding: '1.25rem',
+              borderRadius: 'var(--radius)',
+              background: 'var(--secondary)',
+              border: '1px solid var(--border)',
               textAlign: 'center',
             }}>
-              <p style={{ fontSize: '0.8rem', color: 'hsl(var(--muted-foreground))' }}>
+              <p style={{ fontSize: '0.88rem', color: 'var(--muted-text)', lineHeight: 1.6 }}>
                 ⚕️ <strong>Disclaimer:</strong> These recommendations are based on traditional AYUSH systems and are for informational purposes only.
                 Always consult a qualified healthcare practitioner before starting any herbal treatment.
               </p>

@@ -1,55 +1,49 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Scan, BookOpen, Flower2, Pill, Brain, Users } from 'lucide-react';
+import { Scan, BookOpen, Flower2, Pill, Brain, ArrowUpRight } from 'lucide-react';
 
 const features = [
   {
-    icon: <Scan size={28} />,
-    emoji: "🔍",
+    icon: <Pill size={22} />,
+    title: "AI Prescription Scanner",
+    description: "Upload prescriptions. Vision OCR extracts medicines, verifies therapeutic purpose, and retrieves evidence-backed herbal alternatives.",
+    link: "/prescription",
+    badge: "AI Powered",
+  },
+  {
+    icon: <Scan size={22} />,
     title: "AI Plant Scanner",
-    description: "Upload or capture any plant image and our AI instantly identifies medicinal herbs, providing detailed AYUSH information.",
+    description: "Capture or upload plant photos for instant identification with detailed AYUSH medicinal properties and safety profiles.",
     link: "/scanner",
-    color: "var(--primary)",
+    badge: "Vision AI",
   },
   {
-    icon: <Flower2 size={28} />,
-    emoji: "🌿",
-    title: "Virtual Garden",
-    description: "Build and nurture your personal virtual herbal garden. Plant, grow, and track your collection of medicinal herbs.",
+    icon: <Flower2 size={22} />,
+    title: "Virtual Herbal Garden",
+    description: "Build and care for your digital herb garden. Track growth, learn care guides, and expand your medicinal plant knowledge.",
     link: "/garden",
-    color: "150, 45%, 40%",
+    badge: "Interactive",
   },
   {
-    icon: <BookOpen size={28} />,
-    emoji: "📚",
+    icon: <BookOpen size={22} />,
     title: "Plant Encyclopedia",
-    description: "Explore 500+ medicinal plants with detailed profiles, medicinal uses, preparations, and AYUSH system classifications.",
+    description: "Search 500+ medicinal plants with verified clinical uses, preparations, dosages, and AYUSH system classifications.",
     link: "/encyclopedia",
-    color: "210, 60%, 65%",
+    badge: "500+ Plants",
   },
   {
-    icon: <Pill size={28} />,
-    emoji: "💊",
+    icon: <Pill size={22} />,
     title: "Therapy Guide",
-    description: "Get personalized herbal therapy recommendations based on your symptoms, constitution, and AYUSH treatment protocols.",
+    description: "Receive personalized herbal therapy recommendations tailored to your symptoms, dosha profile, and treatment goals.",
     link: "/therapy",
-    color: "15, 85%, 65%",
+    badge: "Personalized",
   },
   {
-    icon: <Brain size={28} />,
-    emoji: "🧘",
-    title: "Dosha Quiz",
-    description: "Discover your Ayurvedic constitution through our interactive quiz. Get personalized diet and herb recommendations.",
+    icon: <Brain size={22} />,
+    title: "Dosha Assessment Quiz",
+    description: "Identify your Vata, Pitta, and Kapha constitution through our clinical AYUSH questionnaire and diet planner.",
     link: "/quiz",
-    color: "42, 90%, 50%",
-  },
-  {
-    icon: <Users size={28} />,
-    emoji: "🌍",
-    title: "AYUSH Wisdom",
-    description: "Access knowledge from all five AYUSH systems: Ayurveda, Yoga, Unani, Siddha, and Homeopathy traditions.",
-    link: "/encyclopedia",
-    color: "270, 50%, 60%",
+    badge: "AYUSH Quiz",
   },
 ];
 
@@ -61,7 +55,7 @@ function FeatureCard({ feature, index }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => setVisible(true), index * 120);
+          setTimeout(() => setVisible(true), index * 80);
         }
       },
       { threshold: 0.1 }
@@ -71,74 +65,80 @@ function FeatureCard({ feature, index }) {
   }, [index]);
 
   return (
-    <Link to={feature.link} ref={ref} className="glass-card" style={{
+    <Link to={feature.link} ref={ref} className="glass-card feature-card-link" style={{
       padding: '2rem',
+      background: 'var(--card-bg)',
+      border: '1px solid var(--border)',
+      borderRadius: 'var(--radius-lg)',
       textDecoration: 'none',
       display: 'flex',
       flexDirection: 'column',
-      gap: '1rem',
+      gap: '1.1rem',
       opacity: visible ? 1 : 0,
-      transform: visible ? 'translateY(0)' : 'translateY(30px)',
-      transition: `all 0.6s cubic-bezier(0.4, 0, 0.2, 1)`,
+      transform: visible ? 'translateY(0)' : 'translateY(20px)',
+      transition: `all 0.4s cubic-bezier(0.4, 0, 0.2, 1)`,
       cursor: 'pointer',
-      position: 'relative',
-      overflow: 'hidden',
+      boxShadow: 'var(--shadow-card)',
     }}>
-      {/* Glow effect on hover */}
-      <div style={{
-        position: 'absolute',
-        top: '-50%',
-        right: '-50%',
-        width: '200px',
-        height: '200px',
-        borderRadius: '50%',
-        background: `hsl(${typeof feature.color === 'string' && feature.color.includes(',')
-          ? feature.color : 'var(--primary)'} / 0.05)`,
-        filter: 'blur(40px)',
-        transition: 'var(--transition-smooth)',
-      }} />
+      {/* Top row: Icon + Badge */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{
+          width: '3.1rem',
+          height: '3.1rem',
+          borderRadius: '0.625rem',
+          background: 'var(--primary-light)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--primary)',
+        }}>
+          {feature.icon}
+        </div>
 
-      <div style={{
-        width: '3.5rem',
-        height: '3.5rem',
-        borderRadius: 'var(--radius)',
-        background: `hsl(${typeof feature.color === 'string' && feature.color.includes(',')
-          ? feature.color : 'var(--primary)'} / 0.1)`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '1.5rem',
-      }}>
-        {feature.emoji}
+        <span style={{
+          fontSize: '0.75rem',
+          fontWeight: 700,
+          color: 'var(--primary)',
+          background: 'var(--secondary)',
+          padding: '0.25rem 0.65rem',
+          borderRadius: '9999px',
+          border: '1px solid var(--border)',
+        }}>
+          {feature.badge}
+        </span>
       </div>
 
+      {/* Title */}
       <h3 style={{
-        fontFamily: "'Playfair Display', serif",
         fontSize: '1.3rem',
-        fontWeight: 600,
-        color: 'hsl(var(--foreground))',
+        fontWeight: 800,
+        color: 'var(--heading-color)',
+        letterSpacing: '-0.01em',
       }}>
         {feature.title}
       </h3>
 
+      {/* Description */}
       <p style={{
-        fontSize: '0.9rem',
-        color: 'hsl(var(--muted-foreground))',
-        lineHeight: 1.6,
+        fontSize: '1.02rem',
+        color: 'var(--muted-text)',
+        lineHeight: 1.65,
         flex: 1,
       }}>
         {feature.description}
       </p>
 
+      {/* Link */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '0.5rem',
-        fontSize: '0.85rem',
-        fontWeight: 600,
-        color: 'hsl(var(--primary))',
+        gap: '0.35rem',
+        fontSize: '0.92rem',
+        fontWeight: 700,
+        color: 'var(--primary)',
       }}>
-        Explore →
+        Explore feature
+        <ArrowUpRight size={15} />
       </div>
     </Link>
   );
@@ -146,25 +146,28 @@ function FeatureCard({ feature, index }) {
 
 export default function Features() {
   return (
-    <section className="section" id="features">
+    <section className="section" id="features" style={{
+      background: 'var(--bg-primary)',
+    }}>
       <div className="container">
         <div className="section-header">
-          <div className="badge badge-primary" style={{ marginBottom: '1rem' }}>
-            ✨ Features
+          <div className="badge badge-ai" style={{ marginBottom: '0.85rem' }}>
+            ✨ AI &amp; AYUSH Features
           </div>
+          <div className="section-eyebrow">Explore tools</div>
           <h2 className="section-title">
-            Everything You Need for{' '}
-            <span className="text-gradient">Herbal Wellness</span>
+            Evidence-Based Wellness Powered by{' '}
+            <span className="text-gradient">Clinical AI</span>
           </h2>
           <p className="section-subtitle">
-            Powered by AI and rooted in 5,000 years of traditional AYUSH medicine,
-            our platform brings ancient plant wisdom to your fingertips.
+            Combines traditional AYUSH knowledge systems with modern artificial intelligence
+            to deliver verified, safe, and actionable herbal medicine insights.
           </p>
         </div>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
           gap: '1.5rem',
         }}>
           {features.map((feature, index) => (

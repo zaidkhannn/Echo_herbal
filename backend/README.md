@@ -18,3 +18,4 @@ Backend is not yet implemented. This folder is reserved for future server-side c
 - User authentication & profiles
 - Database for plant data and user gardens
 - Therapy recommendation engine
+

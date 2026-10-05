@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { Upload, Camera, Loader2, Leaf, Sparkles, X, BookOpen, Plus } from 'lucide-react';
+import { Upload, Camera, Loader2, Leaf, Sparkles, X } from 'lucide-react';
+import PageHeader from './PageHeader';
 
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
@@ -38,7 +39,6 @@ export default function PlantScanner() {
     setError(null);
 
     try {
-      // Convert image to base64
       const reader = new FileReader();
       const base64 = await new Promise((resolve) => {
         reader.onload = (e) => resolve(e.target.result);
@@ -52,7 +52,7 @@ export default function PlantScanner() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'llama-3.2-90b-vision-preview',
+          model: 'qwen/qwen3.8-27b',
           messages: [
             {
               role: 'system',
@@ -95,25 +95,19 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
       });
 
       if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `API error: ${response.status}`);
       }
 
       const data = await response.json();
-      const content = data.choices[0]?.message?.content;
-
-      // Parse JSON from response (handle markdown code blocks)
-      let parsed;
-      try {
-        const jsonStr = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-        parsed = JSON.parse(jsonStr);
-      } catch {
-        throw new Error('Could not parse plant identification results.');
-      }
-
+      const content = data.choices[0]?.message?.content?.trim();
+      
+      const cleanJson = content.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
+      const parsed = JSON.parse(cleanJson);
       setResult(parsed);
     } catch (err) {
       console.error(err);
-      setError(err.message || 'Failed to identify plant. Please try again.');
+      setError(err.message || 'Failed to identify plant. Please try again with a clearer photo.');
     } finally {
       setScanning(false);
     }
@@ -127,25 +121,22 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
   };
 
   return (
-    <section style={{ paddingTop: '6rem', minHeight: '100vh', background: 'var(--gradient-garden)' }}>
-      <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
-        {/* Header */}
-        <div className="section-header">
-          <div className="badge badge-primary" style={{ marginBottom: '1rem' }}>
-            <Sparkles size={12} /> AI-Powered
-          </div>
-          <h1 className="section-title">Plant Scanner</h1>
-          <p className="section-subtitle">
-            Upload a photo of any plant and our AI will identify it, providing detailed
-            medicinal properties and AYUSH therapy information.
-          </p>
-        </div>
+    <section className="page-tool page-tool--soft">
+      <div className="container page-inner">
+        <PageHeader
+          eyebrow="Vision AI plant identification"
+          subtitle="Upload a photo of any plant and our AI will identify it, providing detailed medicinal properties and AYUSH therapy information."
+        >
+          <h1 className="page-header__title font-display">
+            Identify Any <span className="text-gradient">Medicinal Plant</span>
+          </h1>
+        </PageHeader>
 
         <div style={{
           display: 'grid',
           gridTemplateColumns: result ? '1fr 1fr' : '1fr',
           gap: '2rem',
-          maxWidth: result ? '1100px' : '600px',
+          maxWidth: result ? '1100px' : '620px',
           margin: '0 auto',
           transition: 'all 0.5s ease',
         }}>
@@ -153,43 +144,20 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
           <div>
             {!imagePreview ? (
               <div
+                className={`upload-zone${dragOver ? ' upload-zone--active' : ''}`}
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                 onDragLeave={() => setDragOver(false)}
                 onDrop={handleDrop}
                 onClick={() => fileInputRef.current?.click()}
-                className="glass-card"
-                style={{
-                  padding: '4rem 2rem',
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  border: dragOver ? '2px dashed hsl(var(--primary))' : '2px dashed hsl(var(--border))',
-                  background: dragOver ? 'hsl(var(--primary) / 0.05)' : undefined,
-                  transition: 'var(--transition-smooth)',
-                  minHeight: '350px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '1.5rem',
-                }}
               >
-                <div style={{
-                  width: '5rem',
-                  height: '5rem',
-                  borderRadius: '50%',
-                  background: 'hsl(var(--primary) / 0.1)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  animation: 'float 3s ease-in-out infinite',
-                }}>
-                  <Camera size={32} style={{ color: 'hsl(var(--primary))' }} />
+                <div className="upload-zone__icon">
+                  <Camera size={32} />
                 </div>
                 <div>
-                  <p style={{ fontWeight: 600, fontSize: '1.1rem', color: 'hsl(var(--foreground))' }}>
+                  <p style={{ fontWeight: 700, fontSize: '1.15rem', color: 'var(--heading-color)' }}>
                     Drop your plant image here
                   </p>
-                  <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+                  <p style={{ color: 'var(--muted-text)', fontSize: '0.9rem', marginTop: '0.4rem' }}>
                     or click to browse • PNG, JPG, WebP
                   </p>
                 </div>
@@ -198,7 +166,11 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                 </div>
               </div>
             ) : (
-              <div className="glass-card" style={{
+              <div style={{
+                background: 'var(--card-bg)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-lg)',
+                boxShadow: 'var(--shadow-card)',
                 overflow: 'hidden',
                 position: 'relative',
               }}>
@@ -213,18 +185,6 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                       objectFit: 'cover',
                     }}
                   />
-                  {/* Scan line animation */}
-                  {scanning && (
-                    <div style={{
-                      position: 'absolute',
-                      left: 0,
-                      right: 0,
-                      height: '4px',
-                      background: 'linear-gradient(90deg, transparent, hsl(var(--primary)), transparent)',
-                      animation: 'scanLine 2s ease-in-out infinite',
-                      boxShadow: '0 0 20px hsl(var(--primary) / 0.5)',
-                    }} />
-                  )}
                   {/* Close button */}
                   <button
                     onClick={reset}
@@ -232,10 +192,10 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                       position: 'absolute',
                       top: '0.75rem',
                       right: '0.75rem',
-                      width: '2rem',
-                      height: '2rem',
+                      width: '2.2rem',
+                      height: '2.2rem',
                       borderRadius: '50%',
-                      background: 'rgba(0,0,0,0.5)',
+                      background: 'rgba(0,0,0,0.6)',
                       color: 'white',
                       display: 'flex',
                       alignItems: 'center',
@@ -245,7 +205,7 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                       backdropFilter: 'blur(4px)',
                     }}
                   >
-                    <X size={14} />
+                    <X size={15} />
                   </button>
                 </div>
 
@@ -262,7 +222,7 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                   >
                     {scanning ? (
                       <>
-                        <Loader2 size={16} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
+                        <Loader2 size={16} className="animate-spin" />
                         Scanning...
                       </>
                     ) : (
@@ -290,11 +250,11 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
               <div style={{
                 marginTop: '1rem',
                 padding: '1rem',
-                borderRadius: 'var(--radius)',
-                background: 'hsl(var(--destructive) / 0.1)',
-                color: 'hsl(var(--destructive))',
-                fontSize: '0.9rem',
-                border: '1px solid hsl(var(--destructive) / 0.2)',
+                borderRadius: 'var(--radius-sm)',
+                background: 'rgba(192, 57, 43, 0.08)',
+                color: 'var(--destructive)',
+                fontSize: '0.92rem',
+                border: '1px solid rgba(192, 57, 43, 0.2)',
               }}>
                 ⚠️ {error}
               </div>
@@ -303,8 +263,14 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
 
           {/* Results Panel */}
           {result && (
-            <div style={{ animation: 'fadeUp 0.6s ease-out' }}>
-              <div className="glass-card" style={{ padding: '2rem', overflow: 'hidden' }}>
+            <div>
+              <div style={{
+                background: 'var(--card-bg)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-lg)',
+                boxShadow: 'var(--shadow-card)',
+                padding: '2rem',
+              }}>
                 {/* Confidence Badge */}
                 <div style={{
                   display: 'flex',
@@ -312,25 +278,17 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                   justifyContent: 'space-between',
                   marginBottom: '1.5rem',
                 }}>
-                  <div className="badge badge-primary" style={{ fontSize: '0.75rem' }}>
-                    <Leaf size={12} />
+                  <div className="badge badge-primary" style={{ fontSize: '0.8rem' }}>
+                    <Leaf size={14} />
                     {result.ayushSystem || 'Ayurveda'}
                   </div>
                   <div style={{
-                    padding: '0.25rem 0.75rem',
+                    padding: '0.3rem 0.8rem',
                     borderRadius: '9999px',
-                    background: result.confidence >= 80
-                      ? 'hsl(150, 60%, 40%, 0.1)'
-                      : result.confidence >= 60
-                        ? 'hsl(42, 90%, 50%, 0.1)'
-                        : 'hsl(0, 84%, 60%, 0.1)',
-                    color: result.confidence >= 80
-                      ? 'hsl(150, 60%, 35%)'
-                      : result.confidence >= 60
-                        ? 'hsl(42, 90%, 40%)'
-                        : 'hsl(0, 84%, 50%)',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
+                    background: 'var(--primary-light)',
+                    color: 'var(--primary)',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
                   }}>
                     {result.confidence}% confidence
                   </div>
@@ -338,17 +296,16 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
 
                 {/* Plant Name */}
                 <h2 style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: '1.8rem',
-                  fontWeight: 700,
-                  color: 'hsl(var(--foreground))',
+                  fontSize: '1.85rem',
+                  fontWeight: 800,
+                  color: 'var(--heading-color)',
                   marginBottom: '0.25rem',
                 }}>
                   {result.commonName}
                 </h2>
                 <p style={{
                   fontStyle: 'italic',
-                  color: 'hsl(var(--muted-foreground))',
+                  color: 'var(--muted-text)',
                   fontSize: '0.95rem',
                   marginBottom: '0.5rem',
                 }}>
@@ -356,8 +313,8 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                 </p>
                 {result.family && (
                   <p style={{
-                    color: 'hsl(var(--muted-foreground))',
-                    fontSize: '0.8rem',
+                    color: 'var(--muted-text)',
+                    fontSize: '0.85rem',
                     marginBottom: '1rem',
                   }}>
                     Family: {result.family}
@@ -366,24 +323,25 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
 
                 {/* Description */}
                 <p style={{
-                  fontSize: '0.9rem',
-                  color: 'hsl(var(--foreground) / 0.8)',
-                  lineHeight: 1.6,
+                  fontSize: '0.95rem',
+                  color: 'var(--body-text)',
+                  lineHeight: 1.65,
                   marginBottom: '1.5rem',
-                  padding: '1rem',
-                  background: 'hsl(var(--muted) / 0.5)',
+                  padding: '1.1rem',
+                  background: 'var(--secondary)',
                   borderRadius: 'var(--radius-sm)',
+                  border: '1px solid var(--border)',
                 }}>
                   {result.description}
                 </p>
 
                 {/* Medicinal Uses */}
                 <h3 style={{
-                  fontSize: '0.85rem',
-                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  fontWeight: 700,
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
-                  color: 'hsl(var(--muted-foreground))',
+                  color: 'var(--muted-text)',
                   marginBottom: '0.75rem',
                 }}>
                   Medicinal Uses
@@ -391,12 +349,12 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
                   {(result.medicinalUses || []).map((use, i) => (
                     <span key={i} style={{
-                      padding: '0.3rem 0.7rem',
+                      padding: '0.3rem 0.75rem',
                       borderRadius: '9999px',
-                      background: 'hsl(var(--primary) / 0.08)',
-                      color: 'hsl(var(--primary))',
-                      fontSize: '0.8rem',
-                      fontWeight: 500,
+                      background: 'var(--primary-light)',
+                      color: 'var(--primary)',
+                      fontSize: '0.82rem',
+                      fontWeight: 600,
                     }}>
                       {use}
                     </span>
@@ -407,16 +365,16 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                 {result.doshaEffect && (
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{
-                      fontSize: '0.85rem',
-                      fontWeight: 600,
+                      fontSize: '0.9rem',
+                      fontWeight: 700,
                       textTransform: 'uppercase',
                       letterSpacing: '0.05em',
-                      color: 'hsl(var(--muted-foreground))',
+                      color: 'var(--muted-text)',
                       marginBottom: '0.5rem',
                     }}>
                       Dosha Effect
                     </h3>
-                    <p style={{ fontSize: '0.9rem', color: 'hsl(var(--foreground) / 0.8)' }}>
+                    <p style={{ fontSize: '0.95rem', color: 'var(--body-text)' }}>
                       {result.doshaEffect}
                     </p>
                   </div>
@@ -426,16 +384,16 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                 {result.preparation && (
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{
-                      fontSize: '0.85rem',
-                      fontWeight: 600,
+                      fontSize: '0.9rem',
+                      fontWeight: 700,
                       textTransform: 'uppercase',
                       letterSpacing: '0.05em',
-                      color: 'hsl(var(--muted-foreground))',
+                      color: 'var(--muted-text)',
                       marginBottom: '0.5rem',
                     }}>
                       Preparation
                     </h3>
-                    <p style={{ fontSize: '0.9rem', color: 'hsl(var(--foreground) / 0.8)', lineHeight: 1.6 }}>
+                    <p style={{ fontSize: '0.95rem', color: 'var(--body-text)', lineHeight: 1.6 }}>
                       {result.preparation}
                     </p>
                   </div>
@@ -444,13 +402,13 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                 {/* Precautions */}
                 {result.precautions && (
                   <div style={{
-                    padding: '0.75rem 1rem',
+                    padding: '0.85rem 1.1rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'hsl(var(--accent) / 0.08)',
-                    border: '1px solid hsl(var(--accent) / 0.2)',
+                    background: 'rgba(194, 125, 0, 0.08)',
+                    border: '1px solid rgba(194, 125, 0, 0.2)',
                     marginBottom: '1.5rem',
                   }}>
-                    <p style={{ fontSize: '0.85rem', color: 'hsl(var(--accent-foreground))' }}>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--warning)', lineHeight: 1.5 }}>
                       ⚠️ <strong>Precautions:</strong> {result.precautions}
                     </p>
                   </div>
@@ -459,12 +417,12 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
                 {/* Fun Fact */}
                 {result.funFact && (
                   <div style={{
-                    padding: '0.75rem 1rem',
+                    padding: '0.85rem 1.1rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'hsl(var(--primary) / 0.05)',
-                    border: '1px solid hsl(var(--primary) / 0.1)',
+                    background: 'var(--secondary)',
+                    border: '1px solid var(--border)',
                   }}>
-                    <p style={{ fontSize: '0.85rem', color: 'hsl(var(--foreground) / 0.8)' }}>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--body-text)' }}>
                       💡 <strong>Did you know?</strong> {result.funFact}
                     </p>
                   </div>
@@ -475,31 +433,19 @@ If you cannot identify the plant clearly, set "identified" to false and provide 
         </div>
 
         {/* Tips */}
-        <div style={{
-          marginTop: '3rem',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '1rem',
-          maxWidth: '900px',
-          margin: '3rem auto 0',
-        }}>
+        <div className="tip-grid">
           {[
             { emoji: '📸', title: 'Clear Photo', desc: 'Take a well-lit, focused photo of the plant' },
             { emoji: '🌿', title: 'Show Leaves', desc: 'Include leaves, flowers, or distinctive features' },
             { emoji: '📏', title: 'Close Up', desc: 'Get close enough to show plant details clearly' },
           ].map((tip, i) => (
-            <div key={i} className="glass-card" style={{
-              padding: '1.25rem',
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '0.75rem',
-            }}>
-              <span style={{ fontSize: '1.5rem' }}>{tip.emoji}</span>
+            <div key={i} className="tip-card">
+              <span className="tip-card__emoji">{tip.emoji}</span>
               <div>
-                <p style={{ fontWeight: 600, fontSize: '0.9rem', color: 'hsl(var(--foreground))' }}>
+                <p style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--heading-color)' }}>
                   {tip.title}
                 </p>
-                <p style={{ fontSize: '0.8rem', color: 'hsl(var(--muted-foreground))', marginTop: '0.25rem' }}>
+                <p style={{ fontSize: '0.82rem', color: 'var(--muted-text)', marginTop: '0.25rem' }}>
                   {tip.desc}
                 </p>
               </div>

@@ -1,124 +1,101 @@
 import { Link } from 'react-router-dom';
-import { Leaf, Heart, ExternalLink, MessageCircle, Mail } from 'lucide-react';
+import { Leaf, Heart, Globe, ExternalLink, Mail } from 'lucide-react';
 
 export default function Footer() {
-  const links = {
-    'Explore': [
-      { label: 'AI Scanner', path: '/scanner' },
+  const linkGroups = {
+    Explore: [
+      { label: 'Rx Scanner', path: '/prescription' },
+      { label: 'Plant Scanner', path: '/scanner' },
       { label: 'Encyclopedia', path: '/encyclopedia' },
       { label: 'Virtual Garden', path: '/garden' },
-      { label: 'Therapy Guide', path: '/therapy' },
     ],
-    'Learn': [
+    Learn: [
+      { label: 'Therapy Guide', path: '/therapy' },
       { label: 'Dosha Quiz', path: '/quiz' },
+      { label: 'AYUSH Systems', path: '/encyclopedia' },
+    ],
+    AYUSH: [
       { label: 'Ayurveda', path: '/encyclopedia' },
+      { label: 'Yoga & Naturopathy', path: '/encyclopedia' },
       { label: 'Unani', path: '/encyclopedia' },
       { label: 'Siddha', path: '/encyclopedia' },
-    ],
-    'AYUSH Systems': [
-      { label: '🕉️ Ayurveda', path: '/encyclopedia' },
-      { label: '🧘 Yoga & Naturopathy', path: '/encyclopedia' },
-      { label: '☪️ Unani', path: '/encyclopedia' },
-      { label: '🔱 Siddha', path: '/encyclopedia' },
-      { label: '💊 Homeopathy', path: '/encyclopedia' },
+      { label: 'Homeopathy', path: '/encyclopedia' },
     ],
   };
 
   return (
-    <footer style={{
-      background: 'hsl(var(--card))',
-      borderTop: '1px solid hsl(var(--border))',
-      paddingTop: '4rem',
-      paddingBottom: '2rem',
-      position: 'relative',
-      overflow: 'hidden',
-    }}>
-      {/* Decorative element */}
-      <div style={{
-        position: 'absolute',
-        top: '-100px',
-        right: '-100px',
-        width: '300px',
-        height: '300px',
-        borderRadius: '50%',
-        background: 'hsl(var(--primary) / 0.03)',
-        filter: 'blur(60px)',
-        pointerEvents: 'none',
-      }} />
-
+    <footer className="site-footer">
       <div className="container">
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '3rem',
-          marginBottom: '3rem',
-        }}>
-          {/* Brand */}
+        <div className="footer-grid">
           <div>
             <Link to="/" style={{
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
               textDecoration: 'none',
-              marginBottom: '1rem',
+              marginBottom: '0.875rem',
             }}>
               <div style={{
-                width: '2.25rem',
-                height: '2.25rem',
-                borderRadius: '50%',
-                background: 'var(--gradient-herbal)',
+                width: '2rem',
+                height: '2rem',
+                borderRadius: '0.5rem',
+                background: 'var(--gradient-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: 'var(--shadow-herbal)',
+                boxShadow: '0 4px 14px rgba(27, 117, 86, 0.35)',
               }}>
-                <Leaf size={14} color="white" />
+                <Leaf size={14} color="white" strokeWidth={2.5} />
               </div>
-              <span style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '1.2rem',
-                fontWeight: 700,
+              <span className="font-ui" style={{
+                fontSize: '1.1rem',
+                fontWeight: 800,
+                color: '#FFFFFF',
               }}>
-                ECHO <span className="text-gradient">VedaAI</span>
+                Echo<span style={{ color: '#8CE0C4' }}>Veda AI</span>
               </span>
             </Link>
             <p style={{
-              fontSize: '0.85rem',
-              color: 'hsl(var(--muted-foreground))',
-              lineHeight: 1.6,
-              maxWidth: '280px',
+              fontSize: '0.875rem',
+              color: '#A2B8AC',
+              lineHeight: 1.65,
+              maxWidth: '260px',
+              marginBottom: '1.25rem',
             }}>
               Bridging ancient AYUSH wisdom with modern AI technology.
-              Discover, learn, and heal with nature's pharmacy.
+              Discover, learn, and heal with verified herbal research.
             </p>
 
-            {/* Newsletter */}
-            <div style={{ marginTop: '1.5rem' }}>
+            <div>
               <p style={{
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                color: 'hsl(var(--foreground))',
+                fontSize: '0.72rem',
+                fontWeight: 800,
+                color: '#FFFFFF',
                 marginBottom: '0.5rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.12em',
               }}>
                 Stay updated
               </p>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', gap: '0.375rem' }}>
                 <input
                   type="email"
-                  placeholder="Your email"
+                  placeholder="your@email.com"
                   className="input"
                   style={{
                     flex: 1,
-                    height: '2.25rem',
-                    fontSize: '0.8rem',
-                    borderRadius: 'var(--radius-sm)',
+                    height: '2.125rem',
+                    fontSize: '0.8125rem',
+                    padding: '0 0.75rem',
+                    background: 'rgba(255, 255, 255, 0.06)',
+                    borderColor: 'rgba(255, 255, 255, 0.12)',
+                    color: '#FFFFFF',
                   }}
                 />
-                <button className="btn btn-primary" style={{
-                  padding: '0 1rem',
+                <button type="button" className="btn btn-primary" style={{
+                  padding: '0 0.875rem',
                   fontSize: '0.75rem',
-                  height: '2.25rem',
-                  borderRadius: 'var(--radius-sm)',
+                  height: '2.125rem',
                 }}>
                   Subscribe
                 </button>
@@ -126,33 +103,22 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link Columns */}
-          {Object.entries(links).map(([title, items]) => (
+          {Object.entries(linkGroups).map(([title, items]) => (
             <div key={title}>
               <h4 style={{
-                fontWeight: 600,
-                fontSize: '0.85rem',
-                color: 'hsl(var(--foreground))',
+                fontFamily: 'var(--font-ui)',
+                fontWeight: 800,
+                fontSize: '0.72rem',
+                color: '#FFFFFF',
                 marginBottom: '1rem',
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.12em',
               }}>
                 {title}
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {items.map((item, i) => (
-                  <Link
-                    key={i}
-                    to={item.path}
-                    style={{
-                      fontSize: '0.85rem',
-                      color: 'hsl(var(--muted-foreground))',
-                      textDecoration: 'none',
-                      transition: 'var(--transition-smooth)',
-                    }}
-                    onMouseEnter={e => e.target.style.color = 'hsl(var(--primary))'}
-                    onMouseLeave={e => e.target.style.color = 'hsl(var(--muted-foreground))'}
-                  >
+                  <Link key={i} to={item.path} className="footer-link">
                     {item.label}
                   </Link>
                 ))}
@@ -161,49 +127,49 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Divider */}
         <div style={{
           height: '1px',
-          background: 'hsl(var(--border))',
-          marginBottom: '1.5rem',
+          background: 'rgba(255, 255, 255, 0.08)',
+          marginBottom: '1.25rem',
         }} />
 
-        {/* Bottom */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '1rem',
+          gap: '0.75rem',
         }}>
           <p style={{
-            fontSize: '0.8rem',
-            color: 'hsl(var(--muted-foreground))',
+            fontSize: '0.8125rem',
+            color: '#849E91',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.3rem',
+            gap: '0.25rem',
           }}>
-            Made with <Heart size={12} style={{ color: 'hsl(var(--destructive))' }} /> by ECHO VedaAI Team • {new Date().getFullYear()}
+            © {new Date().getFullYear()} EchoVeda AI. Made with{' '}
+            <Heart size={12} style={{ color: '#E74C3C', fill: '#E74C3C' }} /> for healthcare wellness.
           </p>
 
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.375rem' }}>
             {[
-              { icon: <ExternalLink size={16} />, label: 'GitHub' },
-              { icon: <MessageCircle size={16} />, label: 'Twitter' },
-              { icon: <Mail size={16} />, label: 'Email' },
+              { icon: <Globe size={15} />, label: 'Website' },
+              { icon: <ExternalLink size={15} />, label: 'Community' },
+              { icon: <Mail size={15} />, label: 'Email' },
             ].map((social, i) => (
               <button
                 key={i}
+                type="button"
                 style={{
                   width: '2rem',
                   height: '2rem',
-                  borderRadius: '50%',
-                  background: 'hsl(var(--muted))',
-                  color: 'hsl(var(--muted-foreground))',
+                  borderRadius: '0.5rem',
+                  background: 'rgba(255, 255, 255, 0.06)',
+                  color: '#CBDAD2',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: 'none',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                   cursor: 'pointer',
                   transition: 'var(--transition-smooth)',
                 }}

@@ -3,12 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Leaf, Sun, Moon } from 'lucide-react';
 
 const navLinks = [
-  { path: '/', label: 'Home', emoji: '🏠' },
-  { path: '/scanner', label: 'AI Scanner', emoji: '🔍' },
-  { path: '/encyclopedia', label: 'Encyclopedia', emoji: '📚' },
-  { path: '/garden', label: 'My Garden', emoji: '🌿' },
-  { path: '/therapy', label: 'Therapy', emoji: '💊' },
-  { path: '/quiz', label: 'Dosha Quiz', emoji: '🧘' },
+  { path: '/', label: 'Home' },
+  { path: '/prescription', label: 'Rx Scanner' },
+  { path: '/scanner', label: 'Plant Scanner' },
+  { path: '/encyclopedia', label: 'Encyclopedia' },
+  { path: '/garden', label: 'My Garden' },
+  { path: '/therapy', label: 'Therapy' },
+  { path: '/quiz', label: 'Dosha Quiz' },
 ];
 
 export default function Navbar({ darkMode, setDarkMode }) {
@@ -34,13 +35,13 @@ export default function Navbar({ darkMode, setDarkMode }) {
         left: 0,
         right: 0,
         zIndex: 100,
-        padding: scrolled ? '0.5rem 0' : '0.75rem 0',
-        background: scrolled
-          ? (darkMode ? 'rgba(10, 20, 16, 0.85)' : 'rgba(255, 255, 255, 0.85)')
-          : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
-        borderBottom: scrolled ? '1px solid hsl(var(--border))' : '1px solid transparent',
+        padding: scrolled ? '0.625rem 0' : '0.85rem 0',
+        background: darkMode
+          ? 'rgba(15, 29, 23, 0.92)'
+          : 'rgba(248, 250, 248, 0.92)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
         transition: 'var(--transition-smooth)',
       }}>
         <div className="container" style={{
@@ -52,91 +53,94 @@ export default function Navbar({ darkMode, setDarkMode }) {
           <Link to="/" style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
+            gap: '0.65rem',
             textDecoration: 'none',
           }}>
             <div style={{
-              width: '2.5rem',
-              height: '2.5rem',
-              borderRadius: '50%',
-              background: 'var(--gradient-herbal)',
+              width: '2.4rem',
+              height: '2.4rem',
+              borderRadius: '0.65rem',
+              background: 'var(--primary)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--shadow-herbal)',
+              boxShadow: '0 3px 10px rgba(27, 117, 86, 0.22)',
             }}>
-              <Leaf size={18} color="white" />
+              <Leaf size={17} color="white" strokeWidth={2.5} />
             </div>
-            <div>
-              <span style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '1.25rem',
-                fontWeight: 700,
-                color: 'hsl(var(--foreground))',
-              }}>ECHO</span>
-              <span style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '1.25rem',
-                fontWeight: 700,
-                background: 'var(--gradient-herbal)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                marginLeft: '0.25rem',
-              }}>VedaAI</span>
-            </div>
+            <span className="font-ui" style={{
+              fontSize: '1.3rem',
+              fontWeight: 800,
+              letterSpacing: '-0.02em',
+              color: 'var(--heading-color)',
+            }}>
+              Echo<span className="text-gradient-soft">Veda</span>
+            </span>
           </Link>
 
           {/* Desktop Nav */}
           <div className="hide-mobile" style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.25rem',
+            gap: '0.2rem',
+            background: 'var(--card-bg)',
+            padding: '0.3rem',
+            borderRadius: '9999px',
+            border: '1px solid var(--border)',
+            boxShadow: 'var(--shadow-sm)',
           }}>
-            {navLinks.map(link => (
-              <Link
-                key={link.path}
-                to={link.path}
-                style={{
-                  padding: '0.5rem 0.9rem',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.85rem',
-                  fontWeight: location.pathname === link.path ? 600 : 500,
-                  color: location.pathname === link.path
-                    ? 'hsl(var(--primary))'
-                    : 'hsl(var(--muted-foreground))',
-                  background: location.pathname === link.path
-                    ? 'hsl(var(--primary) / 0.1)'
-                    : 'transparent',
-                  transition: 'var(--transition-smooth)',
-                  textDecoration: 'none',
-                }}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map(link => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  style={{
+                    padding: '0.45rem 0.95rem',
+                    borderRadius: '9999px',
+                    fontSize: '0.9rem',
+                    fontWeight: isActive ? 700 : 600,
+                    color: isActive ? 'var(--primary)' : 'var(--body-text)',
+                    background: isActive ? 'var(--primary-light)' : 'transparent',
+                    transition: 'var(--transition-smooth)',
+                    textDecoration: 'none',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            {/* Theme Toggle */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <Link to="/prescription" className="btn btn-primary btn-sm hide-mobile" style={{
+              borderRadius: '9999px',
+              padding: '0.5rem 1.15rem',
+              fontSize: '0.88rem',
+            }}>
+              Scan Rx
+            </Link>
+
             <button
               onClick={() => setDarkMode(!darkMode)}
               style={{
-                width: '2.25rem',
-                height: '2.25rem',
+                width: '2.3rem',
+                height: '2.3rem',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'hsl(var(--secondary))',
-                color: 'hsl(var(--secondary-foreground))',
+                background: 'var(--card-bg)',
+                color: 'var(--heading-color)',
                 transition: 'var(--transition-smooth)',
-                border: 'none',
+                border: '1px solid var(--border)',
                 cursor: 'pointer',
               }}
               aria-label="Toggle theme"
             >
-              {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+              {darkMode ? <Sun size={15} /> : <Moon size={15} />}
             </button>
 
             {/* Mobile Menu Button */}
@@ -144,15 +148,15 @@ export default function Navbar({ darkMode, setDarkMode }) {
               className="mobile-only"
               onClick={() => setMobileOpen(!mobileOpen)}
               style={{
-                width: '2.25rem',
-                height: '2.25rem',
-                borderRadius: 'var(--radius-sm)',
+                width: '2.3rem',
+                height: '2.3rem',
+                borderRadius: '0.5rem',
                 display: 'none',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'hsl(var(--secondary))',
-                color: 'hsl(var(--secondary-foreground))',
-                border: 'none',
+                background: 'var(--card-bg)',
+                color: 'var(--heading-color)',
+                border: '1px solid var(--border)',
                 cursor: 'pointer',
               }}
               aria-label="Toggle menu"
@@ -169,7 +173,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
           position: 'fixed',
           inset: 0,
           zIndex: 99,
-          background: 'rgba(0,0,0,0.5)',
+          background: 'rgba(22, 51, 40, 0.45)',
           backdropFilter: 'blur(4px)',
         }} onClick={() => setMobileOpen(false)}>
           <div
@@ -179,52 +183,43 @@ export default function Navbar({ darkMode, setDarkMode }) {
               right: 0,
               width: '280px',
               height: '100%',
-              background: 'hsl(var(--card))',
-              padding: '5rem 1.5rem 2rem',
-              boxShadow: 'var(--shadow-deep)',
-              animation: 'slideIn 0.3s ease-out',
+              background: 'var(--card-bg)',
+              padding: '5rem 1.25rem 2rem',
+              boxShadow: 'var(--shadow-lg)',
+              animation: 'slideIn 0.25s ease-out',
               display: 'flex',
               flexDirection: 'column',
-              gap: '0.5rem',
+              gap: '0.35rem',
             }}
             onClick={e => e.stopPropagation()}
           >
-            {navLinks.map(link => (
-              <Link
-                key={link.path}
-                to={link.path}
-                style={{
-                  padding: '0.85rem 1rem',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.95rem',
-                  fontWeight: location.pathname === link.path ? 600 : 400,
-                  color: location.pathname === link.path
-                    ? 'hsl(var(--primary))'
-                    : 'hsl(var(--foreground))',
-                  background: location.pathname === link.path
-                    ? 'hsl(var(--primary) / 0.1)'
-                    : 'transparent',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                }}
-              >
-                <span style={{ fontSize: '1.2rem' }}>{link.emoji}</span>
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map(link => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  style={{
+                    padding: '0.75rem 1rem',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: '0.95rem',
+                    fontWeight: isActive ? 700 : 600,
+                    color: isActive ? 'var(--primary)' : 'var(--heading-color)',
+                    background: isActive ? 'var(--primary-light)' : 'transparent',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    transition: 'var(--transition-smooth)',
+                  }}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
-
-      <style>{`
-        @media (max-width: 768px) {
-          .mobile-only {
-            display: flex !important;
-          }
-        }
-      `}</style>
     </>
   );
 }
