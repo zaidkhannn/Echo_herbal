@@ -1,5 +1,10 @@
 # ECHO VedaAI - Agentic Multimodal Cognitive Intelligence
 
+[![Live Demo on Vercel](https://img.shields.io/badge/Live_Deployment-Vercel-117556?style=for-the-badge&logo=vercel&logoColor=white)](https://echo-herbal.vercel.app)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/zaidkhannn/Echo_herbal)
+
+> **🚀 Live Web Application:** [https://echo-herbal.vercel.app](https://echo-herbal.vercel.app)
+
 An AI-powered platform bridging traditional AYUSH healthcare systems (Ayurveda, Yoga & Naturopathy, Unani, Siddha, and Homeopathy) with modern clinical artificial intelligence, computer vision, and evidence-grounded decision support.
 
 ---
@@ -132,7 +137,15 @@ herb/
    cd frontend && npm run dev
    ```
 
-5. Open [http://localhost:5173/](http://localhost:5173/) in your browser.
+---
+
+## 🌐 Deployment (Vercel)
+
+This project is configured for automated continuous deployment on Vercel:
+
+- **Live URL:** [https://echo-herbal.vercel.app](https://echo-herbal.vercel.app)
+- **Framework Preset:** Vite
+- **Root Configuration:** `vercel.json` included with SPA routing fallback support.
 
 ---
 
